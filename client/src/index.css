@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+:root {
+  --primary-color: #030712;
+  --secondary-color: #D3AF37;
+  --tertiary-color: #3B82F6;
+  /* --color-dark: #0f172a;
+  --color-light: #f8fafc; */
+}
+
+@layer utilities {
+  .primary-color { background-color: var(--primary-color); }
+  .secondary-color { background-color: var(--secondary-color); }
+  .tertiary-color { background-color: var(--tertiary-color); }
+  .text-primary { color: var(--primary-color); }
+  .text-sc { color: var(--secondary-color); }
+  .text-tertiary { color: var(--tertiary-color); }
+  .border-tertiary { border-color: var(--tertiary-color); }
+  .border-primary { border-color: var(--primary-color); }
+}
+
+/* Global custom scrollbar */
+
+* {
+  scrollbar-width: thin;               /* Firefox */
+  scrollbar-color: #D3AF37 #1e1e1e;    /* thumb color | track color */
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1e1e1e; /* dark background */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D3AF37; /* golden thumb */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b58f1f;
+}
+
+/* LOADER */
+
+/* @keyframes fadeInOut {
+  0%, 100% { opacity: 0; transform: scale(0.95); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+.animate-fade-in-out {
+  animation: fadeInOut 1.5s ease-in-out infinite;
+}
+
+.animation-delay-0   { animation-delay: 0ms; }
+.animation-delay-200 { animation-delay: 200ms; }
+.animation-delay-400 { animation-delay: 400ms; }
+.animation-delay-600 { animation-delay: 600ms; }
+.animation-delay-800 { animation-delay: 800ms; } */
+
+/* OR */
+
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeUp {
+  animation: fadeUp 0.6s ease-out forwards;
+}
+
+.custom-input {
+  border: 2px solid rgb(169, 169, 169);
+  border-radius: 0.25rem;
+  height: 2.5rem;
+}
+
+.custom-input:focus {
+  outline: none;
+  border: 2px solid rgb(46, 44, 44);
+}
+
+.custom-input:hover {
+  border: 2px solid rgb(46, 44, 44) ;
+}
+
+.input-wrapper:focus-within .custom-input:not(:focus):hover {
+  pointer-events: none;
+  border-color: rgb(169, 169, 169); /* Reset hover border */
+}
+
+.ant-form-item {
+  margin-bottom: 12px; /* Default 16px hota hai */
+}
+
+.ant-modal-wrap {
+  z-index: 6000 !important;
+}

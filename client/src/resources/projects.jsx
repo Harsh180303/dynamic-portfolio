@@ -1,0 +1,51 @@
+export const projects = [
+    {
+        title: 'PIZZA-HOUSE',
+        technologies: [],
+        image: "https://sheysathya.netlify.app/pizzas.svg",
+        description: "An ecommerce application developed using react, node, redux and mongodb",
+        link: '/',
+    },
+    {
+        title: 'UR-SHOP',
+        technologies: [],
+        image: "https://sheysathya.netlify.app/ecommerce.svg",
+        description: "An ecommerce application developed using react, node, redux and mongodb",
+        link: '/',
+    },
+    {
+        title: 'PRIME-ROOMS',
+        technologies: [],
+        image: "https://sheysathya.netlify.app/hotels.svg",
+        description: "An ecommerce application developed using react, node, redux and mongodb",
+        link: '/',
+    },
+    {
+        title: 'STREAMING-PRO',
+        technologies: [],
+        image: "https://sheysathya.netlify.app/pizzas.svg",
+        description: "An ecommerce application developed using react, node, redux and mongodb",
+        link: '/',
+    },
+    {
+        title: 'FOODIEZZZ',
+        technologies: [],
+        image: "https://sheysathya.netlify.app/pizzas.svg",
+        description: "An ecommerce application developed using react, node, redux and mongodb",
+        link: '/',
+    },
+    {
+        title: 'FILES-&-FOLDERS',
+        technologies: [],
+        image: "https://sheysathya.netlify.app/pizzas.svg",
+        description: "An ecommerce application developed using react, node, redux and mongodb",
+        link: '/',
+    },
+    {
+        title: 'LEARN-STACK',
+        technologies: [],
+        image: "https://sheysathya.netlify.app/pizzas.svg",
+        description: "An ecommerce application developed using react, node, redux and mongodb",
+        link: '/',
+    },
+]
