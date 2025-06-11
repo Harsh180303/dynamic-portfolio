@@ -4,12 +4,21 @@ import Home from './pages/Home'
 import { useEffect, useState } from 'react'
 import Loader from './components/Loader'
 import { useDispatch, useSelector } from 'react-redux'
-import { SetPortfolioData, ShowLoading, HideLoading, ReloadData } from './redux/rootSlice'
+import {
+  SetPortfolioData,
+  ShowLoading,
+  HideLoading,
+  ReloadData,
+} from './redux/rootSlice'
 import Admin from './pages/Admin'
-import { ToastContainer } from "react-toastify"
+import { ToastContainer } from 'react-toastify'
+import ProtectedRoute from './components/ProtectedRoute'
+import Login from './pages/Login'
 
 function App() {
-  const { loading, portfolioData, reloadData } = useSelector((state) => state.root)
+  const { loading, portfolioData, reloadData } = useSelector(
+    (state) => state.root
+  )
   const dispatch = useDispatch()
 
   const getPortfolioData = async () => {
@@ -32,8 +41,8 @@ function App() {
   }, [portfolioData])
 
   useEffect(() => {
-    if(reloadData) {
-      getPortfolioData();
+    if (reloadData) {
+      getPortfolioData()
     }
   }, [reloadData])
 
@@ -45,8 +54,7 @@ function App() {
 
   return (
     <BrowserRouter>
-    
-    <ToastContainer
+      <ToastContainer
         position="top-right"
         autoClose={3000}
         theme="light"
@@ -58,9 +66,14 @@ function App() {
           path="/"
           element={<Home />}
         ></Route>
+        <Route path='/login' element={<Login />} ></Route>
         <Route
           path="/admin"
-          element={<Admin />}
+          element={
+            <ProtectedRoute>
+              <Admin />
+            </ProtectedRoute>
+          }
         ></Route>
       </Routes>
     </BrowserRouter>

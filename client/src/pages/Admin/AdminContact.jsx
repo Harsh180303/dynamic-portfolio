@@ -6,7 +6,7 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 
 function AdminContact() {
-
+  const token = localStorage.getItem('token')
   const { portfolioData } = useSelector((state) => state.root)
   const dispatch = useDispatch()
 
@@ -16,6 +16,10 @@ function AdminContact() {
       const response = await axios.put("/api/portfolio/update-contact", {
         ...values,
         _id: portfolioData.contact._id,
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          }
       })
       dispatch(HideLoading())
       if(response.data.success) {

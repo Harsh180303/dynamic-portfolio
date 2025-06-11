@@ -7,6 +7,7 @@ import {
   Course,
   Contact,
 } from '../models/portfolioModel.js'
+import { verifyToken } from '../middlewares/authMiddleware.js'
 
 const router = Router()
 
@@ -43,7 +44,7 @@ router.get('/get-portfolio-data', async (req, res) => {
 })
 
 // update intro
-router.put('/update-intro', async (req, res) => {
+router.put('/update-intro', verifyToken, async (req, res) => {
   try {
     const intro = await Intro.findByIdAndUpdate(
       { _id: req.body._id },
@@ -60,7 +61,7 @@ router.put('/update-intro', async (req, res) => {
   }
 })
 
-router.put('/update-about', async (req, res) => {
+router.put('/update-about', verifyToken, async (req, res) => {
   try {
     const about = await About.findByIdAndUpdate(
       { _id: req.body._id },
@@ -78,7 +79,7 @@ router.put('/update-about', async (req, res) => {
   }
 })
 
-router.post('/add-experience', async (req, res) => {
+router.post('/add-experience', verifyToken, async (req, res) => {
   try {
     // console.log('idhar aa gya h')
     // console.log('Incoming body:', req.body)
@@ -100,7 +101,7 @@ router.post('/add-experience', async (req, res) => {
 })
 
 // update experience
-router.put('/update-experience', async (req, res) => {
+router.put('/update-experience', verifyToken, async (req, res) => {
   try {
     const experience = await Experience.findByIdAndUpdate(
       { _id: req.body._id },
@@ -123,7 +124,7 @@ router.put('/update-experience', async (req, res) => {
 
 // delete experience
 
-router.delete('/delete-experience', async (req, res) => {
+router.delete('/delete-experience', verifyToken, async (req, res) => {
   try {
     const experience = await Experience.findByIdAndDelete({ _id: req.body._id })
     return res.status(200).send({
@@ -141,7 +142,7 @@ router.delete('/delete-experience', async (req, res) => {
 
 // Project routes
 
-router.put('/update-project', async (req, res) => {
+router.put('/update-project', verifyToken, async (req, res) => {
   try {
     const project = await Project.findByIdAndUpdate(
       { _id: req.body._id },
@@ -162,7 +163,7 @@ router.put('/update-project', async (req, res) => {
   }
 })
 
-router.post('/add-project', async (req, res) => {
+router.post('/add-project', verifyToken, async (req, res) => {
   try {
     const project = new Project(req.body)
     await project.save()
@@ -180,7 +181,7 @@ router.post('/add-project', async (req, res) => {
   }
 })
 
-router.delete('/delete-project', async (req, res) => {
+router.delete('/delete-project', verifyToken, async (req, res) => {
   try {
     const project = await Project.findByIdAndDelete({ _id: req.body._id })
     return res.status(200).send({
@@ -198,7 +199,7 @@ router.delete('/delete-project', async (req, res) => {
 
 // Course routes
 
-router.put('/update-course', async (req, res) => {
+router.put('/update-course', verifyToken, async (req, res) => {
   try {
     const course = await Course.findByIdAndUpdate(
       { _id: req.body._id },
@@ -219,7 +220,7 @@ router.put('/update-course', async (req, res) => {
   }
 })
 
-router.post('/add-course', async (req, res) => {
+router.post('/add-course', verifyToken, async (req, res) => {
   try {
     const course = new Course(req.body)
     await course.save()
@@ -237,7 +238,7 @@ router.post('/add-course', async (req, res) => {
   }
 })
 
-router.delete('/delete-course', async (req, res) => {
+router.delete('/delete-course', verifyToken, async (req, res) => {
   try {
     const course = await Course.findByIdAndDelete({ _id: req.body._id })
     return res.status(200).send({
@@ -277,5 +278,3 @@ router.put('/update-contact', async (req, res) => {
 })
 
 export default router
-
-

@@ -16,6 +16,10 @@ function AdminIntro() {
       const response = await axios.put("/api/portfolio/update-intro", {
         ...values,
         _id: portfolioData.intro._id,
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          }
       })
       dispatch(HideLoading())
       if(response.data.success) {

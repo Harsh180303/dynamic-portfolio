@@ -8,6 +8,7 @@ import { toast } from 'react-toastify'
 import { useEffect } from 'react'
 
 function AdminProjects() {
+  const token = localStorage.getItem('token')
   const [form] = Form.useForm()
   const dispatch = useDispatch()
   const { portfolioData } = useSelector((state) => state.root)
@@ -37,10 +38,17 @@ function AdminProjects() {
         response = await axios.put('/api/portfolio/update-project', {
           ...formattedValues,
           _id: selectedItemForEdit._id,
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          }
         })
       } else {
         // add
-        response = await axios.post('/api/portfolio/add-project', formattedValues)
+        response = await axios.post('/api/portfolio/add-project', formattedValues, {headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          }})
       }
 
       dispatch(HideLoading())
@@ -65,6 +73,10 @@ function AdminProjects() {
       dispatch(ShowLoading())
       const response = await axios.delete('/api/portfolio/delete-project', {
         data: { _id: item._id },
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          }
         // _id: item._id,
       })
       dispatch(HideLoading())

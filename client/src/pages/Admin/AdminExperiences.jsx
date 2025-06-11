@@ -8,6 +8,7 @@ import { toast } from 'react-toastify'
 import { useEffect } from 'react'
 
 function AdminExperiences() {
+  const token = localStorage.getItem('token')
   const [form] = Form.useForm()
   const dispatch = useDispatch()
   const { portfolioData } = useSelector((state) => state.root)
@@ -27,10 +28,19 @@ function AdminExperiences() {
         response = await axios.put('/api/portfolio/update-experience', {
           ...values,
           _id: selectedItemForEdit._id,
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          }
         })
       } else {
         // add
-        response = await axios.post('/api/portfolio/add-experience', values)
+        response = await axios.post('/api/portfolio/add-experience',{
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        }, values)
       }
 
       dispatch(HideLoading())
@@ -55,6 +65,10 @@ function AdminExperiences() {
       dispatch(ShowLoading())
       const response = await axios.delete('/api/portfolio/delete-experience', {
         data: { _id: item._id },
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          }
         // _id: item._id,
       })
       dispatch(HideLoading())
