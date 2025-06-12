@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 
 function Login() {
@@ -48,6 +48,10 @@ function Login() {
           required
           className="w-full mb-3 p-2 border rounded-sm"
         />
+
+        <p className='text-[#0000EE] visited:text-[#551A8B]'>
+          <Link to="/forgot-password">Forgot Password</Link>
+        </p>
 
         <button
           type="submit"

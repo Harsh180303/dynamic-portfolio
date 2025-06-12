@@ -14,6 +14,8 @@ import Admin from './pages/Admin'
 import { ToastContainer } from 'react-toastify'
 import ProtectedRoute from './components/ProtectedRoute'
 import Login from './pages/Login'
+import ForgotPassword from './pages/ForgotPassword'
+import ResetPassword from './pages/ResetPassword'
 
 function App() {
   const { loading, portfolioData, reloadData } = useSelector(
@@ -67,6 +69,8 @@ function App() {
           element={<Home />}
         ></Route>
         <Route path='/login' element={<Login />} ></Route>
+        <Route path='/forgot-password' element={<ForgotPassword />} />
+        <Route path='/reset-password' element={<ResetPassword />}/>
         <Route
           path="/admin"
           element={

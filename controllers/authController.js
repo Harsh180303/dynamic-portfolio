@@ -1,5 +1,7 @@
 import User from '../models/userModel.js'
 import jwt from 'jsonwebtoken'
+import crypto from 'crypto'
+import nodemailer from 'nodemailer'
 // import bcrypt, { genSalt } from 'bcrypt'
 
 export const loginUser = async (req, res) => {
@@ -65,6 +67,94 @@ export const registerUser = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: 'Failed to register',
+    })
+  }
+}
+
+export const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body
+    const user = await User.findOne({ email: email })
+    if(!user) {
+      return res.status(404).json({success: false, message: "User not found"})
+    }
+
+    // Generate OTP and hashed OTP will be saved in our DB
+    const otp = crypto.randomInt(100000, 999999).toString()
+    const hashedOTP = crypto.createHash('sha256').update(otp).digest('hex')
+
+    user.resetPasswordToken = hashedOTP
+    user.resetPasswordExpires = Date.now() + 10 * 60 * 1000 // 10 mins
+    await user.save()
+
+    // Send Email
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASS,
+      }
+    })
+    console.log(user.email)
+    const mailOptions = {
+      from: process.env.MAIL_USER, // should be professional email (change)
+      to: user.email,
+      subject: "Reset Your Password",
+      text: "This OTP is only valid for 10 minutes",
+      html: `<p>Your OTP for password reset is: <b>${otp}</b></p>`,
+    }
+
+    await transporter.sendMail(mailOptions)
+
+    return res.status(200).json({ success: true, message: "OTP sent to your email"})
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({success: false, message: "Failed to send OTP"})
+  }
+}
+
+
+export const resetPassword = async (req, res) => {
+  try {
+    const { email, otp, newPassword } = req.body
+    const user = await User.findOne({ email: email})
+    if(!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      })
+    }
+
+    if(Date.now() > user.resetPasswordExpires) {
+      return res.status(400).json({
+        success: false,
+        message: 'Your OTP has been expired'
+      })
+    }
+
+    const hashedOTP = crypto.createHash('sha256').update(otp).digest('hex')
+    if(user.resetPasswordToken !== hashedOTP) {
+        return res.status(400).json({
+        success: false,
+        message: "Invalid OTP",
+      });
+    }
+    
+    user.password = newPassword
+    user.resetPasswordExpires = null
+    user.resetPasswordToken = null
+    await user.save()
+
+    return res.status(200).json({
+      success: true,
+      message: 'Password reset successful'
+    })
+    
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({
+      success: false,
+      message: "Reset failed"
     })
   }
 }
