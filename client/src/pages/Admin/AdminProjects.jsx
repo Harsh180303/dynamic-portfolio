@@ -3,7 +3,7 @@ import TextArea from 'antd/es/input/TextArea'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { HideLoading, ReloadData, ShowLoading } from '../../redux/rootSlice'
-import axios from 'axios'
+import axiosInstance from '../../utils/axiosInstance'
 import { toast } from 'react-toastify'
 import { useEffect } from 'react'
 
@@ -13,8 +13,6 @@ function AdminProjects() {
   const dispatch = useDispatch()
   const { portfolioData } = useSelector((state) => state.root)
 
-  // console.log('Redux full state:', useSelector((state) => state))
-  
   const { projects } = portfolioData
 
   const [showAddEditModal, setShowAddEditModal] = useState(false) // Modal open or not
@@ -35,20 +33,13 @@ function AdminProjects() {
 
       // update
       if (selectedItemForEdit) {
-        response = await axios.put('/api/portfolio/update-project', {
+        response = await axiosInstance.put('/portfolio/update-project', {
           ...formattedValues,
           _id: selectedItemForEdit._id,
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          }
         })
       } else {
         // add
-        response = await axios.post('/api/portfolio/add-project', formattedValues, {headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          }})
+        response = await axiosInstance.post('/portfolio/add-project', formattedValues)
       }
 
       dispatch(HideLoading())
@@ -71,13 +62,8 @@ function AdminProjects() {
   const onDelete = async (item) => {
     try {
       dispatch(ShowLoading())
-      const response = await axios.delete('/api/portfolio/delete-project', {
+      const response = await axiosInstance.delete('/portfolio/delete-project', {
         data: { _id: item._id },
-        headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          }
-        // _id: item._id,
       })
       dispatch(HideLoading())
       if (response.data.success) {

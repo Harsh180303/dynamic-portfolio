@@ -18,7 +18,7 @@ function ForgotPassword() {
         navigate('/reset-password', {state: { email }})
       }, 1500)
     } catch (error) {
-        console.log(error)
+        // console.log(error)
       setMsg(error.response?.data?.message || 'Error')
     }
   }

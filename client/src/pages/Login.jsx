@@ -16,7 +16,7 @@ function Login() {
             localStorage.setItem('token', response.data.token)
             navigate('/admin')
         } catch (error) {
-            console.log(error)
+            // console.log(error)
             setError(error.response?.data?.message || 'Login Failed')
         }
     }

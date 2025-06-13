@@ -2,7 +2,7 @@ import React from 'react'
 import { Form, Input } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { ShowLoading, HideLoading } from "../../redux/rootSlice"
-import axios from 'axios'
+import axiosInstance from '../../utils/axiosInstance'
 import { toast } from 'react-toastify'
 
 function AdminIntro() {
@@ -13,13 +13,9 @@ function AdminIntro() {
   const onFinish = async (values) => {
     try {
       dispatch(ShowLoading())
-      const response = await axios.put("/api/portfolio/update-intro", {
+      const response = await axiosInstance.put("/portfolio/update-intro", {
         ...values,
         _id: portfolioData.intro._id,
-        headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          }
       })
       dispatch(HideLoading())
       if(response.data.success) {

@@ -2,7 +2,7 @@ import React from 'react'
 import { Form, Input, Select } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { ShowLoading, HideLoading } from "../../redux/rootSlice"
-import axios from 'axios'
+import axiosInstance from '../../utils/axiosInstance'
 import { toast } from 'react-toastify'
 
 function AdminAbout() {
@@ -13,13 +13,9 @@ function AdminAbout() {
   const onFinish = async (values) => {
     try {
       dispatch(ShowLoading())
-      const response = await axios.put("/api/portfolio/update-about", {
+      const response = await axiosInstance.put("/portfolio/update-about", {
         ...values,
         _id: portfolioData.about._id,
-        headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          }
       })
       dispatch(HideLoading())
       if(response.data.success) {

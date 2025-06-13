@@ -2,7 +2,6 @@ import User from '../models/userModel.js'
 import jwt from 'jsonwebtoken'
 import crypto from 'crypto'
 import nodemailer from 'nodemailer'
-// import bcrypt, { genSalt } from 'bcrypt'
 
 export const loginUser = async (req, res) => {
   try {
@@ -26,7 +25,7 @@ export const loginUser = async (req, res) => {
       expiresIn: '30m',
     })
 
-    console.log("TOKEN ----> ", token)
+    // console.log("TOKEN ----> ", token)
     return res.status(200).json({
       success: true,
       message: 'Login successful',
@@ -48,13 +47,10 @@ export const registerUser = async (req, res) => {
         .json({ success: false, message: 'User already exist' })
     }
 
-    // const hashedPassword = bcrypt.hash(password, genSalt(10))
-
     const newUser = new User({
         name,
         email,
         password,
-        // password: hashedPassword,
     })
 
     await newUser.save()
@@ -84,7 +80,7 @@ export const forgotPassword = async (req, res) => {
     const hashedOTP = crypto.createHash('sha256').update(otp).digest('hex')
 
     user.resetPasswordToken = hashedOTP
-    user.resetPasswordExpires = Date.now() + 10 * 60 * 1000 // 10 mins
+    user.resetPasswordExpires = Date.now() + 10 * 60 * 1000
     await user.save()
 
     // Send Email
@@ -95,9 +91,9 @@ export const forgotPassword = async (req, res) => {
         pass: process.env.MAIL_PASS,
       }
     })
-    console.log(user.email)
+    // console.log(user.email)
     const mailOptions = {
-      from: process.env.MAIL_USER, // should be professional email (change)
+      from: process.env.MAIL_USER,
       to: user.email,
       subject: "Reset Your Password",
       text: "This OTP is only valid for 10 minutes",
@@ -139,7 +135,7 @@ export const resetPassword = async (req, res) => {
         message: "Invalid OTP",
       });
     }
-    
+
     user.password = newPassword
     user.resetPasswordExpires = null
     user.resetPasswordToken = null

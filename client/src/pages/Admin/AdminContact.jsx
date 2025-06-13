@@ -3,6 +3,7 @@ import { Form, Input } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { ShowLoading, HideLoading } from "../../redux/rootSlice"
 import axios from 'axios'
+import axiosInstance from '../../utils/axiosInstance'
 import { toast } from 'react-toastify'
 
 function AdminContact() {
@@ -13,13 +14,9 @@ function AdminContact() {
   const onFinish = async (values) => {
     try {
       dispatch(ShowLoading())
-      const response = await axios.put("/api/portfolio/update-contact", {
+      const response = await axiosInstance.put("/portfolio/update-contact", {
         ...values,
         _id: portfolioData.contact._id,
-        headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          }
       })
       dispatch(HideLoading())
       if(response.data.success) {

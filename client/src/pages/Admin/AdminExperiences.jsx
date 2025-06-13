@@ -3,7 +3,7 @@ import TextArea from 'antd/es/input/TextArea'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { HideLoading, ReloadData, ShowLoading } from '../../redux/rootSlice'
-import axios from 'axios'
+import axiosInstance from '../../utils/axiosInstance'
 import { toast } from 'react-toastify'
 import { useEffect } from 'react'
 
@@ -25,22 +25,13 @@ function AdminExperiences() {
 
       // update
       if (selectedItemForEdit) {
-        response = await axios.put('/api/portfolio/update-experience', {
+        response = await axiosInstance.put('/portfolio/update-experience', {
           ...values,
           _id: selectedItemForEdit._id,
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          }
         })
       } else {
         // add
-        response = await axios.post('/api/portfolio/add-experience',{
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        }, values)
+        response = await axiosInstance.post('/portfolio/add-experience', values)
       }
 
       dispatch(HideLoading())
@@ -63,13 +54,8 @@ function AdminExperiences() {
   const onDelete = async (item) => {
     try {
       dispatch(ShowLoading())
-      const response = await axios.delete('/api/portfolio/delete-experience', {
-        data: { _id: item._id },
-        headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          }
-        // _id: item._id,
+      const response = await axiosInstance.delete('/portfolio/delete-experience', {
+        data: { _id: item._id }
       })
       dispatch(HideLoading())
       if (response.data.success) {
