@@ -58,9 +58,9 @@ function Admin() {
 
   return (
     <div className="h-screen w-screen overflow-x-hidden">
-      <div className="flex justify-between py-4 primary-color px-10 sm:px-10 overflow-x-hidden w-screen">
+      <div className="flex justify-between py-4 primary-color px-10 sm:px-10 overflow-x-hidden w-screen items-center">
         <Header />
-        <button onClick={LogoutHandler} className='secondary-color px-4 font-semibold cursor-pointer'>Logout</button>
+        <button onClick={LogoutHandler} className='secondary-color px-4 h-10 font-semibold cursor-pointer'>Logout</button>
       </div>
         <h1 className='px-10 pt-4 text-3xl text-primary font-bold'>Admin Pannel</h1>
 

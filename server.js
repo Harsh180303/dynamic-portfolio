@@ -12,11 +12,16 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
-app.use('/api/auth', authRoute)  // ye search karna hai ki structure kya hoga
+app.use('/api/auth', authRoute)
 app.use('/api/portfolio', portfolioRoute)
 
+app.use((err, req, res, next) => {
+  console.error(err.stack)
+  res.status(500).json({ success: false, message: 'Something broke!' })
+})
+
 app.get('/', (req, res) => {
-  res.send('Hello Developer Harsh, Respect++++')
+  res.send('Server is running. Welcome')
 })
 
 app.listen(PORT, () => {
