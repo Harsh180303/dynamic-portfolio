@@ -9,7 +9,10 @@ connectDB()
 dotenv.config()
 const PORT = process.env.PORT || 4000
 const app = express()
-app.use(cors())
+app.use(cors({
+  origin: '*',
+  credentials: true
+}))
 app.use(express.json())
 
 app.use('/api/auth', authRoute)

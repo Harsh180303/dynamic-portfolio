@@ -12,7 +12,9 @@ function Login() {
     const handleLogin = async (e) => {
         e.preventDefault()
         try {
-            const response = await axios.post('/api/auth/login', { email, password })
+            const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/auth/login`, { email, password },
+              { withCredentials: true }
+            )
             localStorage.setItem('token', response.data.token)
             navigate('/admin')
         } catch (error) {

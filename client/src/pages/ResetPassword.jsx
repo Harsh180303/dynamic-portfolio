@@ -22,11 +22,13 @@ function ResetPassword() {
   const submitHandler = async (e) => {
     e.preventDefault()
     try {
-      const response = await axios.post('/api/auth/reset-password', {
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/auth/reset-password`, {
         email,
         otp,
         newPassword,
-      })
+      },
+      { withCredentials: true }
+    )
 
       setMsg(response.data.message)
       toast.success('Password reset successful')
