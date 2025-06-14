@@ -24,7 +24,7 @@ router.get('/get-portfolio-data', async (req, res) => {
         Contact.findOne(),
       ])
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       data: {
         intro,
@@ -36,7 +36,6 @@ router.get('/get-portfolio-data', async (req, res) => {
       },
     })
 
-    res.json({ message: 'Portfolio data success' })
   } catch (error) {
     console.log(error.message)
     res.status(500).json({ success: false, message: 'Server Error' })
