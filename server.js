@@ -12,7 +12,7 @@ const app = express()
 
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://dynamic-portfolio-puce-nine.vercel.app'
+  'https://harsh-chourasiya.vercel.app'
 ]
 
 app.use(cors({
