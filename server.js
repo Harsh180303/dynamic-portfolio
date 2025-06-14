@@ -10,7 +10,7 @@ dotenv.config()
 const PORT = process.env.PORT || 4000
 const app = express()
 app.use(cors({
-  origin: '*',
+  origin: 'https://dynamic-portfolio-puce-nine.vercel.app',
   credentials: true
 }))
 app.use(express.json())
