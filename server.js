@@ -9,8 +9,14 @@ connectDB()
 dotenv.config()
 const PORT = process.env.PORT || 4000
 const app = express()
+
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://dynamic-portfolio-puce-nine.vercel.app'
+]
+
 app.use(cors({
-  origin: 'https://dynamic-portfolio-puce-nine.vercel.app',
+  origin: allowedOrigins,
   credentials: true
 }))
 app.use(express.json())
